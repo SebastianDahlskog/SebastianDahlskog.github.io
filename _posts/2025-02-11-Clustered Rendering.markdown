@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "Clustered Rendering"
 date:   2025-02-11 22:17:57 +0100
 categories: jekyll update
 ---

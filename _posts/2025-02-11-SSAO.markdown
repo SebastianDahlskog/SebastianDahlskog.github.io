@@ -13,8 +13,8 @@ During my 7th Game Project at The Game Assembly, I Implemented SSAO in my group'
 SSAO is short for Screen space ambient occlusion.  
 In broad terms, it approximates the occlusion of ambient light for a pixel.
 
-## How?
-
-In broad terms, the algorithm works by sampling points around the pixel's position in view-space, and comparing 
+The algorithm works by sampling points around the pixel's position in view-space, and comparing 
 the depth values at those points to the pixel's depth. More samples that have a lower depth means more occlusion.
 It writes the occlusion to a texture that is then read by the lighting shader where it is factored into the ambient light calculation.
+
+## How?

@@ -20,16 +20,23 @@
 
 title: Sebastian Dahlskog
 email: sebastian@dahlskogs.se
+author: Sebastian Dahlskog
 description: >- # this means to ignore newlines until "baseurl:"
-  Sebastian Dahlskog - Game Programmer.
+  Game programming portfolio.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  SebastianDahlskog
+logo: /img/me.png
+show-downloads: true  
+show-sidebar: true
 
 # Build settings
 theme: minima
 plugins:
   - jekyll-feed
+
+minima:
+  skin: dark
 
 # Exclude from processing.
 # The following items will not be processed, by default.

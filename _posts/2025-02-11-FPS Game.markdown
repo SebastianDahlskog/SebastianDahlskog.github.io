@@ -1,0 +1,9 @@
+---
+layout: post
+title:  "FPS Game"
+categories: jekyll update
+author: sebbe
+thumbnail: "/img/p7.png"
+---
+
+For our 7th group project at The Game Assembly, we were tasked with making an FPX (first person experience) game.

@@ -20,7 +20,7 @@ layout: default
           <h3 style="margin-bottom: 2px;">
             {{ post.title | escape }}
           </h3>
-          <span><img width="250px" src="{{ post.thumbnail }}" alt=""></span>
+          <span><img class="thumbnail" src="{{ post.thumbnail }}" alt=""></span>
         </a>
         {%- if site.show_excerpts -%}
           {{ post.excerpt }}

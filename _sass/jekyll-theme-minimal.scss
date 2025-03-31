@@ -55,10 +55,10 @@ a:hover small {
   color:#777;
 }
 
-.wrapper {
-  width:860px;
-  margin:0 auto;
-}
+// .wrapper {
+//   width:860px;
+//   margin:0 auto;
+// }
 
 blockquote {
   border-left:1px solid #e5e5e5;
@@ -186,7 +186,7 @@ strong {
 }
 
 section {
-  width:500px;
+  width:70%;
   float:right;
   padding-bottom:50px;
 }
@@ -273,7 +273,7 @@ footer {
   }
 
   .downloads li, .downloads li + li + li {
-    width:33%;
+    width:20%;
   }
 }
 

@@ -5,11 +5,13 @@ date:   2025-02-11 22:17:57 +0100
 thumbnail: "/img/ssao.png"
 ---
 
-![img](/img/ssao.png)
+
 
 During my 7th Game Project at The Game Assembly, 
 I Implemented SSAO in my group's custom C++ game engine, using DirectX11, with the goal of
 improving the graphical fidelity of our game.
+
+<iframe src="https://www.youtube.com/embed/N8CzbXjcDxQ" frameborder="0" allowfullscreen></iframe>
 
 ## What is SSAO?
 
@@ -28,7 +30,7 @@ It writes the occlusion to a texture that is then read by the lighting shader wh
 
 The raw output of the SSAO is noticeably noisy, so blurring is needed to smooth out the final picture.
 I therefore ran the image through two passes of gaussian blur (horizontal, vertical) to get a smoother result. 
-Gaussian blur is not the optimal method for this, it would be better to use something that preserves sharp edges.
+Gaussian blur might not be the optimal method for this, since it does not preserve sharp edges.
 
 
 #### Before Blur
@@ -48,7 +50,7 @@ This is perhaps the most obvious optimization, and would be easy to do.
 
 ### Blur that respects edges
 
-As I mentioned before, the blur method I used does not preserve sharp edges, which is unfortunate.
+As I mentioned before, the blur method I used does not preserve sharp edges, which I think is unfortunate.
 I would change the filter to something like kuwahara or median, both of which *do* preserve edges.
 
 ### More efficient sampling

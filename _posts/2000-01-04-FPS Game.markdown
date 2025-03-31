@@ -2,7 +2,7 @@
 layout: post
 title:  "FPS Game"
 categories: jekyll update
-author: sebbe
+author: Sebastian Dahlskog
 thumbnail: "/img/p7.png"
 ---
 

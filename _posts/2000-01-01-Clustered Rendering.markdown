@@ -10,23 +10,23 @@ During the last semester at The Game Assembly we had to plan and perform an eigh
 I chose to implement clustered rendering, 
 an optimization technique for reducing the number of lights evaluated per pixel.
 
+I took a lot of inspiration from Emil Persson's [Practical Clustered Shading](https://www.humus.name/Articles/PracticalClusteredShading.pdf)  
+As well as David Hu's [https://github.com/DaveH355/clustered-shading](https://github.com/DaveH355/clustered-shading)
+
 ## Clustered Rendering Overview
 
 Clustered rendering (aka clustered shading) is about partitioning the view frustum into "clusters" (think of it like AABBs) that are each assigned any lights that intersect their volume. The lighting shader can then look up the only the lights that were assigned to the cluster that contains the pixel being shaded, thereby reducing the amount of considered lights per pixel.
 
-So, every frame, the steps are basically
-* Assign lights to every cluster their bounding spheres overlap
-* Copy data
+So, every frame, the steps are
+1. Assign lights to every cluster their bounding spheres overlap
+2. Copy data to GPU
+3. Consume data in shader
 
 ## Light assignment on CPU!
 
 The bulk of the work performed in clustered rendering is assigning lights to clusters. 
-I do this by brute-force testing each light against every cluster in the view frustum. 
+I do this by brute-force testing each light against every cluster in the view frustum (sphere vs AABB). 
 In a scene with many lights and thousands of clusters this is quite a performance hit.
-
-My implementation performs light assignment on the CPU, which honestly isn't a very good idea if performance is a consideration... Multi threading was a must if I wanted to run it in realtime with hundreds of lights.
-fortunately implementing multithreaded light assignment was extremely simple since all 
-the culling can be performed independantly.
 
 ```cpp
 for (unsigned clusterIndex = 0; clusterIndex < aClusterGroup->Size(); ++clusterIndex)
@@ -61,8 +61,16 @@ for (unsigned clusterIndex = 0; clusterIndex < aClusterGroup->Size(); ++clusterI
 }
 ```
 
+My implementation performs light assignment on the CPU, which honestly isn't a very good idea in regards to performance. 
+Multi threading was a must if I wanted to run it in realtime with hundreds of lights.
+fortunately implementing multithreaded light assignment was extremely simple since all 
+elements can be computed independantly.
+
 ### Wait, how is the view frustum divided???
-There are several different division schemes, but the one commonly used is to divide 
+Width and height are divided in a uniform grid. However, depth is divided exponentially.  
+For any depth-slice $slice$ the depth where that slice starts is given by
+
+$$Z=Near_z(\frac{Far_z}{Near_z})\frac{slice}{numslices}$$
 
 ## Copying cluster data to the GPU
 
@@ -71,7 +79,15 @@ I store
 
 ## Pixel Shader light-lookup
 
-When shading the scene
+When shading the scene, each pixel looks up which cluster it belongs to:
+
+```hlsl
+
+```
+
+## Result
+
+Unfortunately I was unable to completely finish the project. In many ways
 
 ## Takeaways
 

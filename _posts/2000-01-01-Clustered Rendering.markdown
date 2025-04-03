@@ -70,7 +70,7 @@ elements can be computed independantly.
 Width and height are divided in a uniform grid. However, depth is divided exponentially.  
 For any depth-slice $slice$ the depth where that slice starts is given by
 
-$$Z=Near_z(\frac{Far_z}{Near_z})\frac{slice}{numslices}$$
+$$Z=Near_z(\frac{Far_z}{Near_z})^{\frac{slice}{numslices}}$$
 
 ## Copying cluster data to the GPU
 

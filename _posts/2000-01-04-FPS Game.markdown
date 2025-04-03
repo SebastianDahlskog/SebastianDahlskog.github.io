@@ -7,3 +7,4 @@ thumbnail: "/img/p7.png"
 ---
 
 For our 7th group project at The Game Assembly, we were tasked with making an FPX (first person experience) game.
+Our game, called "AI Quit" (I quit, but AI)

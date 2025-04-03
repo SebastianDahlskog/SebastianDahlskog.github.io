@@ -34,7 +34,8 @@ show-sidebar: true
 theme: minima
 plugins:
   - jekyll-feed
-
+  - kramdown
+  
 minima:
   skin: dark
 

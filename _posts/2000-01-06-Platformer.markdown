@@ -6,7 +6,7 @@ author: Sebastian Dahlskog
 thumbnail: "/img/platformer.png"
 ---
 
-The fourth group project at The Game Assembly was a top-down adventure.
+My third group project at The Game Assembly 
 
 <iframe src="https://www.youtube.com/embed/tAvcn48JpxI"></iframe>
 

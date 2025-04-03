@@ -5,8 +5,6 @@ date:   2025-02-11 22:17:57 +0100
 thumbnail: "/img/ssao.png"
 ---
 
-
-
 During my 7th Game Project at The Game Assembly, 
 I Implemented SSAO in my group's custom C++ game engine, using DirectX11, with the goal of
 improving the graphical fidelity of our game.
@@ -31,7 +29,6 @@ It writes the occlusion to a texture that is then read by the lighting shader wh
 The raw output of the SSAO is noticeably noisy, so blurring is needed to smooth out the final picture.
 I therefore ran the image through two passes of gaussian blur (horizontal, vertical) to get a smoother result. 
 Gaussian blur might not be the optimal method for this, since it does not preserve sharp edges.
-
 
 #### Before Blur
 
@@ -58,3 +55,58 @@ I would change the filter to something like kuwahara or median, both of which *d
 This is a basic version of SSAO. It needs a large amount of samples to produce a decent result, 
 which isn't good, since sampling textures is very expensive.
 There *are* ways to get a good result using fewer samples.
+
+## Code for those interested:
+
+```hlsl
+PostProcessPixelOutput main(PostProcessVertexToPixel input)
+{
+    PostProcessPixelOutput output;
+    output.myColor = float4(1, 1, 1, 1);
+
+    float2 uv = input.myPosition.xy / resolutionAndTime.xy;
+    float pixelDepth = depthTexture.Sample(wrapSampler, uv).r;
+    if (pixelDepth == 1.0f)
+    {
+        return output;
+    }
+    
+    const float RADIUS = extra.x;
+    const float2 NOISE_SCALE = resolutionAndTime.xy / NOISE_RESOLUTION;
+    float4 worldPosition = float4(gBufferPositionTexture.Sample(wrapSampler, uv).xyz, 1.0f);
+    float3 viewPosition = GetViewpos(worldPosition);
+    float3 viewNormal = gBufferNormalTexture.Sample(wrapSampler, uv);
+    viewNormal = normalize(2.0f * viewNormal - 1.0f);
+    viewNormal = mul(views[mainCamera], float4(viewNormal, 0));
+    
+    float3 randomVec = SSAORotationTexture.Sample(wrapSampler, uv * NOISE_SCALE).rgb;
+    randomVec = normalize(2.0f * randomVec - 1.0f);
+    float3 tangent = normalize(randomVec - viewNormal * dot(randomVec, viewNormal));
+    float3 bitangent = cross(viewNormal, tangent);
+    float3x3 transformMat = float3x3(tangent, bitangent, viewNormal);
+    
+    float occlusion = 0.0;
+    for (int i = 0; i < KERNEL_SIZE; ++i)
+    {
+        float3 kernelSample = SSAOKernelTexture.Sample(wrapSampler, ((float) i / KERNEL_SIZE)).xyz;
+        kernelSample = normalize(2.0f * kernelSample - 1.0f);
+        float3 samplePos = mul(kernelSample, transformMat);
+        samplePos = samplePos * RADIUS + viewPosition;
+
+        float3 sampleDir = normalize(samplePos - viewPosition);
+
+        float nDotS = max(dot(viewNormal, sampleDir), 0);
+
+        float2 offset = GetUVFromView(samplePos);
+
+        float4 sampleWorldPos = gBufferPositionTexture.Sample(wrapSampler, offset);
+        float sampleDepth = mul(views[mainCamera], sampleWorldPos).z;
+
+        float rangeCheck = smoothstep(0.0, 1.0, RADIUS / abs(viewPosition.z - sampleDepth));
+        occlusion += rangeCheck * step(sampleDepth, samplePos.z) * nDotS;
+    }
+    
+    output.myColor.rgb = 1.0f - occlusion / (float)KERNEL_SIZE;
+    return output;
+}
+```

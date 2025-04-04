@@ -67,6 +67,7 @@ fortunately implementing multithreaded light assignment was extremely simple sin
 elements can be computed independantly.
 
 ### Wait, how is the view frustum divided???
+
 Width and height are divided in a uniform grid. However, depth is divided exponentially.  
 For any depth-slice $slice$ the depth where that slice starts is given by
 

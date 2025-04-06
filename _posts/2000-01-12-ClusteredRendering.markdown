@@ -6,12 +6,14 @@ author: Sebastian Dahlskog
 thumbnail: "/img/clustered.png"
 ---
 
-During the last semester at The Game Assembly we had to plan and perform an eight-week project of our choosing.  
+During the last semester at The Game Assembly we had to plan and perform an eight-week project of our choosing. 
 I chose to implement clustered rendering, 
 an optimization technique for reducing the number of lights evaluated per pixel.
 
 I took a lot of inspiration from Emil Persson's [Practical Clustered Shading](https://www.humus.name/Articles/PracticalClusteredShading.pdf)  
 As well as David Hu's [https://github.com/DaveH355/clustered-shading](https://github.com/DaveH355/clustered-shading)
+
+Also special thanks to Adam Rohdin for inspiring me in my darkest 
 
 ## Clustered Rendering Overview
 
@@ -69,7 +71,7 @@ elements can be computed independantly.
 ### Wait, how is the view frustum divided???
 
 Width and height are divided in a uniform grid. However, depth is divided exponentially.  
-For any depth-slice $slice$ the depth where that slice starts is given by
+For any depth-slice the depth where that slice starts is given by
 
 $$Z=Near_z(\frac{Far_z}{Near_z})^{\frac{slice}{numslices}}$$
 
@@ -83,12 +85,15 @@ I store
 When shading the scene, each pixel looks up which cluster it belongs to:
 
 ```hlsl
-
+float viewZ = GetViewpos(views[aCamera], aWorldPos).z;
+int zSlice = int((log(abs(viewZ) / near) * cLSRes.z) / log(far / near));
+float2 uv = WorldToUV(aWorldPos, aCamera);
+int4 clusterCoordinate = int4((uv * cLSRes.xy), zSlice, 0);
 ```
 
 ## Result
 
-Unfortunately I was unable to completely finish the project. In many ways
+Unfortunately I was unable to completely finish the project on time. It has a bug where sometimes the light assignment doesn't correctly determine wether a light should be assigned to a cluster, excluding that light from somewhere it should have been included, leading to flickering. Nonetheless I learnt a lot from the project and I plan to keep working on it.
 
 ## Takeaways
 

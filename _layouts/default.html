@@ -1,51 +1,23 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: "en-US" }}">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
-{% seo %}
-    <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
-    <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <![endif]-->
-    {% include head-custom.html %}
-  </head>
+  {%- include head.html -%}
+
   <body>
-    <header>
-      <h1><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
 
-      {% if site.logo %}
-        <img src="{{site.logo | relative_url}}" alt="Logo" />
-      {% endif %}
+    {%- include header.html -%}
 
-      <p>{{ site.description | default: site.github.project_tagline }}</p>
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        {{ content }}
+      </div>
+    </main>
 
-      <p class="view">{{ site.phone }}</p>
-      <p class="view">{{ site.email }}</p>
+    {%- include footer.html -%}
 
-      {% if site.github.is_user_page %}
-      <p class="view"><a href="{{ site.github.owner_url }}">My GitHub</a></p>
-      {% endif %}
-
-      {% if site.show_downloads %}
-      <ul class="downloads">
-        <li><a href="{{ site.github.zip_url }}">Download <strong>ZIP File</strong></a></li>
-      </ul>
-      {% endif %}
-    </header>
-
-    
-    <section>
-
-    {{ content }}
-
-    </section>
-    <footer>
-      {% include disclaimer.html %}
-    </footer>
-    
-    <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
   </body>
+
 </html>

@@ -9,8 +9,9 @@ layout: default
 
   {{ content }}
 
+  <!-- Individual Projects -->
   {%- if site.posts.size > 0 -%}
-    <h2 class="post-list-heading">{{ page.list_title | default: "Projects" }}</h2>
+    <h2 id="posts" class="post-list-heading">{{ page.list_title | default: "Indivudual Projects" }}</h2>
     <ul class="post-list">
       {%- for post in site.posts -%}
       <div style=" margin-bottom:15px;">
@@ -18,7 +19,27 @@ layout: default
           <h3 style="margin-bottom: 2px;">
             {{ post.title | escape }}
           </h3>
-          <span><img class="thumbnail" src="{{ post.thumbnail }}" alt=""></span>
+          <span><img style="border-radius: 10px;" class="thumbnail" src="{{ post.thumbnail }}" alt=""></span>
+        </a>
+        {%- if site.show_excerpts -%}
+          {{ post.excerpt }}
+        {%- endif -%}
+      </div>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
+  <!-- Group Projects -->
+  {%- if site.projects.size > 0 -%}
+    <h2 id="projects" class="post-list-heading">{{ page.list_title | default: "Group Projects" }}</h2>
+    <ul class="post-list">
+      {%- for post in site.projects -%}
+      <div style=" margin-bottom:15px;">
+        <a class="post-link" href="{{ post.url | relative_url }}">
+          <h3 style="margin-bottom: 2px;">
+            {{ post.title | escape }}
+          </h3>
+          <span><img style="border-radius: 10px;" class="thumbnail" src="{{ post.thumbnail }}" alt=""></span>
         </a>
         {%- if site.show_excerpts -%}
           {{ post.excerpt }}

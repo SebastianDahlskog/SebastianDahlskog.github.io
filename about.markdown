@@ -1,12 +1,19 @@
 ---
-layout: post
+layout: page
 title: About Me
 permalink: /about/
 ---
 
-![img](/img/me.jpg)
 
-* 🎓 2nd year game programmer at The Game Assembly Stockholm. 
-* 🔎 Specializing in graphics programming
-* 🎮 Love games, especially From Software and tac-shooters
 
+Hi! I'm Sebastian, a 2nd year Game Programmer at The Game Assembly Stockholm. My main interest lies in game graphics.
+
+I'm excited to work with you!
+
+<address>
+<a href="tel:{{site.phone}}">{{site.phone}}</a>
+<br>
+<a href="mailto:{{site.email}}">{{site.email}}</a>
+<br>
+<a href="https://www.linkedin.com/in/sebastian-dahlskog/">LinkedIn</a>
+</address>

@@ -6,8 +6,8 @@ thumbnail: "/img/ssao.png"
 ---
 
 During my 7th Game Project at The Game Assembly, 
-I Implemented SSAO in my group's custom C++ game engine, using DirectX11, with the goal of
-improving the graphical fidelity of our game.
+I wanted to implement SSAO in my group's custom C++ game engine, using DirectX11, with the goal of
+improving the graphical quality of our games.
 
 <iframe src="https://www.youtube.com/embed/N8CzbXjcDxQ" frameborder="0" allowfullscreen></iframe>
 

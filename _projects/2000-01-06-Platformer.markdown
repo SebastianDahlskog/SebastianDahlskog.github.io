@@ -6,13 +6,14 @@ author: Sebastian Dahlskog
 thumbnail: "/img/platformer.png"
 ---
 
-My third group project at The Game Assembly 
+My third group project at The Game Assembly was a platformer called "Desolate Soul"
 
 <iframe src="https://www.youtube.com/embed/tAvcn48JpxI"></iframe>
 
 Areas of responsibility in this game: 
 * Particle System
-* Light logic
+* Lights
+* Light culling
 * General Programming/Debugging
 
 ##  Particle System

@@ -15,5 +15,5 @@ I'm excited to work with you!
 <br>
 <a href="mailto:{{site.email}}">{{site.email}}</a>
 <br>
-<a href="https://www.linkedin.com/in/sebastian-dahlskog/">LinkedIn</a>
+<a href="https://www.linkedin.com/in/sebastian-dahlskog/">My LinkedIn</a>
 </address>

@@ -10,7 +10,6 @@ My fourth group project at The Game Assembly was "Spores of Malice" - a top-down
 <iframe src="https://www.youtube.com/embed/JWn_G3hDBeY" frameborder="0" allowfullscreen></iframe>
 
 Areas of responsibility in this game: 
-* Shadow mapping
 * General Gameplay programming
-* Boss battle logic (collaboration with Anghello Escalera)
+* Boss battle logic in collaboration with Anghello Escalera (find him [here](https://anghelloescalerairribarrin.com/))
 * UI for reloading

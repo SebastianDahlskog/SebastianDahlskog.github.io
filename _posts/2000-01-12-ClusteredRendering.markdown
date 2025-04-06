@@ -13,7 +13,7 @@ an optimization technique for reducing the number of lights evaluated per pixel.
 I took a lot of inspiration from Emil Persson's [Practical Clustered Shading](https://www.humus.name/Articles/PracticalClusteredShading.pdf)  
 As well as David Hu's [https://github.com/DaveH355/clustered-shading](https://github.com/DaveH355/clustered-shading)
 
-Also special thanks to Adam Rohdin for inspiring me in my darkest 
+Special thanks goes out to Adam Rohdin for help with shader debugging.
 
 ## Clustered Rendering Overview
 
@@ -77,8 +77,14 @@ $$Z=Near_z(\frac{Far_z}{Near_z})^{\frac{slice}{numslices}}$$
 
 ## Copying cluster data to the GPU
 
-After assigning lights to clusters, the data must be made available to the GPU.  
-I store
+After assigning lights to clusters, the data must be made available to the GPU. 
+
+I store the cluster data as a texture in the R32G32_UINT format storing
+* its offset into a "light-index buffer" in the R-channel
+* its point and spotlight counts in the G-channel (first 16 bits for pointlights, last 16 for spotlights)
+
+### Light Indices in a buffer
+For every intersection of a light and a cluster, I add that light's index to a structured buffer of uints. Every cluster will store its offset into this buffer so that it can find its lights.
 
 ## Pixel Shader light-lookup
 
@@ -91,7 +97,38 @@ float2 uv = WorldToUV(aWorldPos, aCamera);
 int4 clusterCoordinate = int4((uv * cLSRes.xy), zSlice, 0);
 ```
 
+The shader then gets the light buffer offset and the light counts from the cluster by loading from the texture using that coordinate.
+
+```hlsl
+uint2 lightInfo = ClusterTexture.Load(float4(clusterCoord)).rg;
+uint lightOffset = lightInfo.r;
+uint lightCounts = lightInfo.g; // 16 bits for pointlights, and 16 bits for spotlights
+
+uint pointlightCount = lightCounts & 0xFFFF;
+uint spotlightCount = lightCounts >> 16;
+```
+
+Then it loops through the light indices
+and calculates as usual:
+
+```hlsl
+float3 pointAndSpotLightSum = 0;
+for (int i = 0; i < pointlightCount; ++i)
+{
+    uint index = lightIndexBuffer.Load(lightOffset + i).clusterLightIndex;
+    PointLightData pl = PointLights[index];
+    pointAndSpotLightSum += EvaluatePointLight(diffuseColor, specularColor, normal,
+        roughness, pl.color_and_intensity.rgb, pl.color_and_intensity.a, pl.position_and_range.a,
+        pl.position_and_range.xyz, viewDir, worldPosition.xyz);
+}
+
+// Repeat for spotlights
+```
+
 ## Result
+
+<iframe allowfullscreen src="https://youtube.com/embed/p_ClWIrqhLI">
+</iframe>
 
 Unfortunately I was unable to completely finish the project on time. It has a bug where sometimes the light assignment doesn't correctly determine wether a light should be assigned to a cluster, excluding that light from somewhere it should have been included, leading to flickering. Nonetheless I learnt a lot from the project and I plan to keep working on it.
 
@@ -99,6 +136,6 @@ Unfortunately I was unable to completely finish the project on time. It has a bu
 
 ### CPU Light culling = SLOW 
 
-Should have made light assignment run as a compute shader for less performance impact. 
+Pretty far into the project I realized that I **REALLY** should have made light assignment run as a compute shader for less performance impact. 
 
-As far as I'm aware only reason to choose CPU light assignment over the compute shader alternative would be if you need to support older hardware that doesn't implement a graphics API that supports compute shaders. Obviously my student-project rendering system 
+As far as I'm aware only reason to choose CPU light assignment over the compute shader alternative would be if you need to support older hardware that doesn't implement a graphics API that supports compute shaders.

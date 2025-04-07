@@ -23,4 +23,3 @@ using C++ and DX11. It is a deferred rendering system that has a few neat featur
 * Mesh VFX
 * Particles System
 * Postprocessing
-

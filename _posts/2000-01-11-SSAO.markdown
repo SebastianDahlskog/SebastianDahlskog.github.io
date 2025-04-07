@@ -14,7 +14,7 @@ improving the graphical quality of our games.
 ## What is SSAO?
 
 SSAO is short for Screen Space Ambient Occlusion.  
-In broad terms, SSAO approximates the occlusion of ambient light for a pixel based on its surrounding geometry.
+In broad terms, SSAO approximates the occlusion of ambient light for a pixel based on its surrounding geometry. This darkens areas that are deemed to have things in front of it, adding a sense of depth, and "spatial coherency". It's a very subtle effect but adds a lot to the perceived realism.
 
 ## How Does it Work?
 

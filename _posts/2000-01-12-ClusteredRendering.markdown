@@ -75,6 +75,11 @@ For any depth-slice the depth where that slice starts is given by
 
 $$Z=Near_z(\frac{Far_z}{Near_z})^{\frac{slice}{numslices}}$$
 
+This means that as the depth increases, the slices become larger (fewer slices the further you go from the camera).
+
+This is desirable because usually more lights will be near the camera, 
+so having a lot of faraway clusters wouldn't really help much.
+
 ## Copying cluster data to the GPU
 
 After assigning lights to clusters, the data must be made available to the GPU. 
@@ -84,6 +89,7 @@ I store the cluster data as a texture in the R32G32_UINT format storing
 * its point and spotlight counts in the G-channel (first 16 bits for pointlights, last 16 for spotlights)
 
 ### Light Indices in a buffer
+
 For every intersection of a light and a cluster, I add that light's index to a structured buffer of uints. Every cluster will store its offset into this buffer so that it can find its lights.
 
 ## Pixel Shader light-lookup
@@ -127,15 +133,17 @@ for (int i = 0; i < pointlightCount; ++i)
 
 ## Result
 
-<iframe allowfullscreen src="https://youtube.com/embed/p_ClWIrqhLI">
-</iframe>
+<iframe allowfullscreen src="https://youtube.com/embed/p_ClWIrqhLI"></iframe>
 
-Unfortunately I was unable to completely finish the project on time. It has a bug where sometimes the light assignment doesn't correctly determine wether a light should be assigned to a cluster, excluding that light from somewhere it should have been included, leading to flickering. Nonetheless I learnt a lot from the project and I plan to keep working on it.
+Unfortunately I was unable to completely finish the project on time. I encountered a bug where sometimes the light assignment doesn't correctly determine wether a light should be assigned to a cluster, excluding that light from somewhere it should have been included, leading to flickering. 
+
+Nonetheless I learnt a lot from the project and I plan to keep working on it to bring it to completion.
+
+If I had more time I would run profiling to see how the shading time is affected by this technique. 
 
 ## Takeaways
 
 ### CPU Light culling = SLOW 
 
 Pretty far into the project I realized that I **REALLY** should have made light assignment run as a compute shader for less performance impact. 
-
-As far as I'm aware only reason to choose CPU light assignment over the compute shader alternative would be if you need to support older hardware that doesn't implement a graphics API that supports compute shaders.
+As far as I'm aware only reason to choose CPU light assignment over the compute shader alternative would be if you need to support older hardware that doesn't implement a graphics API that supports compute shaders. The performance issues are probably made worse by my use of my own sub-optimal, non-SIMD math library.

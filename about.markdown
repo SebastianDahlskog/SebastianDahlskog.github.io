@@ -22,4 +22,5 @@ I'm excited to work with you!
 <a href="https://www.linkedin.com/in/sebastian-dahlskog/">My LinkedIn</a>
 </address>
 
+<br>
 *I am part of The Game Assembly’s internship program. As per the agreement between the Game Industry and The Game Assembly, neither student nor company may be in contact with one another regarding internships before April 23rd. Any internship offers can be made on May 6th, at the earliest.*

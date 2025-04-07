@@ -24,6 +24,8 @@ It writes the occlusion to a texture that is then read by the lighting shader wh
 
 ![img](/img/explanation.png)
 
+(sorry about the prog art)
+
 ### Beware the noise
 
 The raw output of the SSAO is noticeably noisy, so blurring is needed to smooth out the final picture.

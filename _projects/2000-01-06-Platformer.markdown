@@ -14,6 +14,7 @@ It was made in 12 weeks using the school's own engine, TGE.
 
 Areas of responsibility in this game: 
 * Particle System
+* Player Attack
 * Lights
 * Light culling
 * General Programming/Debugging

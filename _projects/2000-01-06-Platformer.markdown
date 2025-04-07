@@ -8,6 +8,8 @@ thumbnail: "/img/platformer.png"
 
 My third group project at The Game Assembly was a platformer called "Desolate Soul"
 
+It was made in 12 weeks using the school's own engine, TGE.
+
 <iframe src="https://www.youtube.com/embed/tAvcn48JpxI"></iframe>
 
 Areas of responsibility in this game: 

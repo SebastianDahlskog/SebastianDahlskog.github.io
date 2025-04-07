@@ -6,5 +6,14 @@ author: Sebastian Dahlskog
 thumbnail: "/img/p7.png"
 ---
 
-For our 7th group project at The Game Assembly, we were tasked with making an FPX (first person experience) game.
-Our game, called "AI Quit" (I quit, but AI)
+Our 7th group project at The Game Assembly is called "AI Quit"
+and is a fast-paced FPS inspired by [Anger Foot](https://store.steampowered.com/app/1978590/Anger_Foot/).
+
+AI Quit was made in our group's own C++ and DX11 engine, Tonic Engine.
+It is still in development.
+
+Areas of responsibility in this game: 
+* PBR Lighting
+* Instanced rendering (boosted our FPS 6x)
+* SSAO
+* General Programming/Debugging
